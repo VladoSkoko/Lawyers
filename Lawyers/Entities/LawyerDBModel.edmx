@@ -1,0 +1,353 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="LawyersModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Lawyer">
+          <Key>
+            <PropertyRef Name="LawyerID" />
+          </Key>
+          <Property Name="LawyerID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="100" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Matter">
+          <Key>
+            <PropertyRef Name="MatterID" />
+          </Key>
+          <Property Name="MatterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="CompanyID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Submatter">
+          <Key>
+            <PropertyRef Name="SubmatterID" />
+          </Key>
+          <Property Name="SubmatterID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MatterID" Type="int" Nullable="false" />
+          <Property Name="Name" Type="nchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="LawyerID" Type="int" Nullable="false" />
+          <Property Name="SubmatterID" Type="int" Nullable="false" />
+          <Property Name="BillableTime" Type="int" Nullable="false" />
+          <Property Name="Date" Type="datetime" Nullable="false" />
+          <Property Name="Description" Type="nvarchar" MaxLength="1024" />
+        </EntityType>
+        <Association Name="FK_Matter_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="Matter" Type="Self.Matter" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="Matter">
+              <PropertyRef Name="MatterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submatter_Matter">
+          <End Role="Matter" Type="Self.Matter" Multiplicity="1" />
+          <End Role="Submatter" Type="Self.Submatter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matter">
+              <PropertyRef Name="MatterID" />
+            </Principal>
+            <Dependent Role="Submatter">
+              <PropertyRef Name="MatterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_Lawyer">
+          <End Role="Lawyer" Type="Self.Lawyer" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lawyer">
+              <PropertyRef Name="LawyerID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="LawyerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_Submatter">
+          <End Role="Submatter" Type="Self.Submatter" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Submatter">
+              <PropertyRef Name="SubmatterID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="SubmatterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Function Name="sp_GetAllTasks" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="LawyersModelStoreContainer">
+          <EntitySet Name="Company" EntityType="Self.Company" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Lawyer" EntityType="Self.Lawyer" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Matter" EntityType="Self.Matter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Submatter" EntityType="Self.Submatter" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Task" EntityType="Self.Task" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_Matter_Company" Association="Self.FK_Matter_Company">
+            <End Role="Company" EntitySet="Company" />
+            <End Role="Matter" EntitySet="Matter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submatter_Matter" Association="Self.FK_Submatter_Matter">
+            <End Role="Matter" EntitySet="Matter" />
+            <End Role="Submatter" EntitySet="Submatter" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_Lawyer" Association="Self.FK_Task_Lawyer">
+            <End Role="Lawyer" EntitySet="Lawyer" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_Submatter" Association="Self.FK_Task_Submatter">
+            <End Role="Submatter" EntitySet="Submatter" />
+            <End Role="Task" EntitySet="Task" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="LawyersModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Company">
+          <Key>
+            <PropertyRef Name="CompanyID" />
+          </Key>
+          <Property Name="CompanyID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Matter" Relationship="Self.FK_Matter_Company" FromRole="Company" ToRole="Matter" />
+        </EntityType>
+        <EntityType Name="Lawyer">
+          <Key>
+            <PropertyRef Name="LawyerID" />
+          </Key>
+          <Property Name="LawyerID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Lawyer" FromRole="Lawyer" ToRole="Task" />
+        </EntityType>
+        <EntityType Name="Matter">
+          <Key>
+            <PropertyRef Name="MatterID" />
+          </Key>
+          <Property Name="MatterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="CompanyID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Company" Relationship="Self.FK_Matter_Company" FromRole="Matter" ToRole="Company" />
+          <NavigationProperty Name="Submatters" Relationship="Self.FK_Submatter_Matter" FromRole="Matter" ToRole="Submatter" />
+        </EntityType>
+        <EntityType Name="Submatter">
+          <Key>
+            <PropertyRef Name="SubmatterID" />
+          </Key>
+          <Property Name="SubmatterID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MatterID" Type="Int32" Nullable="false" />
+          <Property Name="Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" Nullable="false" />
+          <NavigationProperty Name="Matter" Relationship="Self.FK_Submatter_Matter" FromRole="Submatter" ToRole="Matter" />
+          <NavigationProperty Name="Tasks" Relationship="Self.FK_Task_Submatter" FromRole="Submatter" ToRole="Task" />
+        </EntityType>
+        <EntityType Name="Task">
+          <Key>
+            <PropertyRef Name="TaskID" />
+          </Key>
+          <Property Name="TaskID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="LawyerID" Type="Int32" Nullable="false" />
+          <Property Name="SubmatterID" Type="Int32" Nullable="false" />
+          <Property Name="BillableTime" Type="Int32" Nullable="false" />
+          <Property Name="Date" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Description" Type="String" MaxLength="1024" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Lawyer" Relationship="Self.FK_Task_Lawyer" FromRole="Task" ToRole="Lawyer" />
+          <NavigationProperty Name="Submatter" Relationship="Self.FK_Task_Submatter" FromRole="Task" ToRole="Submatter" />
+        </EntityType>
+        <Association Name="FK_Matter_Company">
+          <End Role="Company" Type="Self.Company" Multiplicity="1" />
+          <End Role="Matter" Type="Self.Matter" Multiplicity="0..1" />
+          <ReferentialConstraint>
+            <Principal Role="Company">
+              <PropertyRef Name="CompanyID" />
+            </Principal>
+            <Dependent Role="Matter">
+              <PropertyRef Name="MatterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_Lawyer">
+          <End Role="Lawyer" Type="Self.Lawyer" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Lawyer">
+              <PropertyRef Name="LawyerID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="LawyerID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Submatter_Matter">
+          <End Role="Matter" Type="Self.Matter" Multiplicity="1" />
+          <End Role="Submatter" Type="Self.Submatter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Matter">
+              <PropertyRef Name="MatterID" />
+            </Principal>
+            <Dependent Role="Submatter">
+              <PropertyRef Name="MatterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Task_Submatter">
+          <End Role="Submatter" Type="Self.Submatter" Multiplicity="1" />
+          <End Role="Task" Type="Self.Task" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Submatter">
+              <PropertyRef Name="SubmatterID" />
+            </Principal>
+            <Dependent Role="Task">
+              <PropertyRef Name="SubmatterID" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="LawyersEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Companies" EntityType="Self.Company" />
+          <EntitySet Name="Lawyers" EntityType="Self.Lawyer" />
+          <EntitySet Name="Matters" EntityType="Self.Matter" />
+          <EntitySet Name="Submatters" EntityType="Self.Submatter" />
+          <EntitySet Name="Tasks" EntityType="Self.Task" />
+          <AssociationSet Name="FK_Matter_Company" Association="Self.FK_Matter_Company">
+            <End Role="Company" EntitySet="Companies" />
+            <End Role="Matter" EntitySet="Matters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_Lawyer" Association="Self.FK_Task_Lawyer">
+            <End Role="Lawyer" EntitySet="Lawyers" />
+            <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Submatter_Matter" Association="Self.FK_Submatter_Matter">
+            <End Role="Matter" EntitySet="Matters" />
+            <End Role="Submatter" EntitySet="Submatters" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Task_Submatter" Association="Self.FK_Task_Submatter">
+            <End Role="Submatter" EntitySet="Submatters" />
+            <End Role="Task" EntitySet="Tasks" />
+          </AssociationSet>
+          <FunctionImport Name="sp_GetAllTasks" ReturnType="Collection(LawyersModel.sp_GetAllTasks_Result)" />
+        </EntityContainer>
+        <ComplexType Name="sp_GetAllTasks_Result">
+          <Property Type="Int32" Name="TaskID" Nullable="false" />
+          <Property Type="String" Name="TaskDescription" Nullable="true" MaxLength="1024" />
+          <Property Type="Int32" Name="TaskBillableTime" Nullable="false" />
+          <Property Type="DateTime" Name="TaskDate" Nullable="false" Precision="23" />
+          <Property Type="Int32" Name="LawyerID" Nullable="true" />
+          <Property Type="String" Name="LawyerName" Nullable="true" MaxLength="100" />
+          <Property Type="Int32" Name="SubmatterID" Nullable="true" />
+          <Property Type="String" Name="SubmatterName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="MatterID" Nullable="true" />
+          <Property Type="String" Name="MatterName" Nullable="true" MaxLength="50" />
+          <Property Type="Int32" Name="CompanyID" Nullable="true" />
+          <Property Type="String" Name="CompanyName" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="LawyersModelStoreContainer" CdmEntityContainer="LawyersEntities">
+          <EntitySetMapping Name="Companies">
+            <EntityTypeMapping TypeName="LawyersModel.Company">
+              <MappingFragment StoreEntitySet="Company">
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Lawyers">
+            <EntityTypeMapping TypeName="LawyersModel.Lawyer">
+              <MappingFragment StoreEntitySet="Lawyer">
+                <ScalarProperty Name="LawyerID" ColumnName="LawyerID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Matters">
+            <EntityTypeMapping TypeName="LawyersModel.Matter">
+              <MappingFragment StoreEntitySet="Matter">
+                <ScalarProperty Name="MatterID" ColumnName="MatterID" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Submatters">
+            <EntityTypeMapping TypeName="LawyersModel.Submatter">
+              <MappingFragment StoreEntitySet="Submatter">
+                <ScalarProperty Name="SubmatterID" ColumnName="SubmatterID" />
+                <ScalarProperty Name="MatterID" ColumnName="MatterID" />
+                <ScalarProperty Name="Name" ColumnName="Name" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Tasks">
+            <EntityTypeMapping TypeName="LawyersModel.Task">
+              <MappingFragment StoreEntitySet="Task">
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+                <ScalarProperty Name="LawyerID" ColumnName="LawyerID" />
+                <ScalarProperty Name="SubmatterID" ColumnName="SubmatterID" />
+                <ScalarProperty Name="BillableTime" ColumnName="BillableTime" />
+                <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Description" ColumnName="Description" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="sp_GetAllTasks" FunctionName="LawyersModel.Store.sp_GetAllTasks">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="LawyersModel.sp_GetAllTasks_Result">
+                <ScalarProperty Name="TaskID" ColumnName="TaskID" />
+                <ScalarProperty Name="TaskDescription" ColumnName="TaskDescription" />
+                <ScalarProperty Name="TaskBillableTime" ColumnName="TaskBillableTime" />
+                <ScalarProperty Name="TaskDate" ColumnName="TaskDate" />
+                <ScalarProperty Name="LawyerID" ColumnName="LawyerID" />
+                <ScalarProperty Name="LawyerName" ColumnName="LawyerName" />
+                <ScalarProperty Name="SubmatterID" ColumnName="SubmatterID" />
+                <ScalarProperty Name="SubmatterName" ColumnName="SubmatterName" />
+                <ScalarProperty Name="MatterID" ColumnName="MatterID" />
+                <ScalarProperty Name="MatterName" ColumnName="MatterName" />
+                <ScalarProperty Name="CompanyID" ColumnName="CompanyID" />
+                <ScalarProperty Name="CompanyName" ColumnName="CompanyName" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="true" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

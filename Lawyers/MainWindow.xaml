@@ -1,0 +1,354 @@
+﻿<Window x:Class="Lawyers.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lawyers"
+        mc:Ignorable="d"
+        Title="Lawyers"
+        FontSize="13.333"
+        Icon="Content\Images\Briefcase-528.ico"
+        MinWidth="800"
+        MinHeight="600"
+        >
+    <Grid>
+        <Grid.Resources>
+            <ResourceDictionary Source="ResourceDictionaries/Base.xaml" />
+        </Grid.Resources>
+        <TabControl TabStripPlacement="Left" Margin="0" HorizontalAlignment="Stretch" VerticalAlignment="Stretch" HorizontalContentAlignment="Left" Padding="2 2 2 0" UseLayoutRounding="False">
+            <TabItem Name="tiLawyers" Style="{StaticResource TabItemStyle}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Content\Images\Contacts-30.png" Style="{StaticResource MenuIconStyle}" />
+                        <TextBlock Text="Lawyers" Style="{StaticResource MenuTextStyle}" />
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <TabItem.Content>
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Top" Margin="0,5,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="4*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Content="Search:" Grid.Column="0" Grid.Row="0"/>
+                            <TextBox x:Name="tbLawyerSearch" Grid.Column="1" Grid.Row="0" Style="{StaticResource SearchBarStyle}" GotFocus="tbLawyerSearch_GotFocus" MouseEnter="tbLawyerSearch_MouseEnter" TextChanged="tbLawyerSearch_TextChanged"  />
+                            <!--<Button x:Name="Ad_Button_Osvezi" Grid.Column="1" Grid.Row="1" Content="Osvezi" MinWidth="100" MinHeight="25" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25" Click="Ad_Button_Osvezi_Click"/>-->
+                        </Grid>
+
+                        <Grid DockPanel.Dock="Bottom" Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!--<Label Content="Formular za dodavanje advokata" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" FontSize="14.667" Background="#FFEAEAEA" HorizontalContentAlignment="Center" Margin="0,0,0,5" />-->
+                            <DockPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Background="#FFEAEAEA" Margin="0,0,0,10" >
+                                <Image DockPanel.Dock="Right" Source="Content/Images/Info-64.png" Width="25" Margin="0,0,10,0" />
+                                <Label Content="Add a new lawyer" Style="{StaticResource HeaderStyle}"/>
+                            </DockPanel>
+
+                            <Label Content="Full name:" Grid.Column="0" Grid.Row="2" Margin="0,0,0,5" />
+                            <TextBox x:Name="tbLawyerName" Grid.Column="1" Grid.Row="2" Style="{StaticResource TextBoxStyle}" GotFocus="tbLawyerName_GotFocus"  />
+                            <Button x:Name="btnAddLawyer" Grid.Column="3" Grid.Row="2" Content="Add" MinWidth="50" MinHeight="25" VerticalAlignment="Top" Height="25" Margin="20,0,0,5" Click="btnAddLawyer_Click" />
+                            <Button x:Name="btnCancelLawyer" Grid.Column="3" Grid.Row="3" Content="Cancel" MinWidth="50" MinHeight="25" VerticalAlignment="Top" Height="25"  Margin="20,0,0,0" Click="btnCancelLawyer_Click"/>
+                        </Grid>
+
+                        <DockPanel Margin="0,20">
+                            <DockPanel DockPanel.Dock="Top" Background="#FFEAEAEA">
+                                <Image DockPanel.Dock="Right" Source="Content/Images/Info-64.png" Width="25" Margin="0,0,10,0" ToolTip="Double click on a lawyer to get task info."/>
+                                <Label Content="All lawyers" Style="{StaticResource HeaderStyle}" />
+                            </DockPanel>
+                            <ListView x:Name="lvLawyer" Style="{StaticResource ListViewStyle}" MouseDoubleClick="lvLawyer_MouseDoubleClick"  />
+
+                        </DockPanel>
+
+                    </DockPanel>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Name="TabItem_Klijenti" Style="{StaticResource TabItemStyle}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Content/Images/Briefcase-30.png" Style="{StaticResource MenuIconStyle}" />
+                        <TextBlock Text="Companies" Style="{StaticResource MenuTextStyle}" />
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <TabItem.Content>
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Top" Margin="0,5,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="4*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Content="Search:" Grid.Column="0" Grid.Row="0"/>
+                            <TextBox x:Name="tbCompanySearch" Grid.Column="1" Grid.Row="0" Style="{StaticResource SearchBarStyle}" GotFocus="tbCompanySearch_GotFocus" MouseEnter="tbCompanySearch_MouseEnter" TextChanged="tbCompanySearch_TextChanged"  />
+                            <!--<Button x:Name="Kl_Button_Osvezi" Grid.Column="1" Grid.Row="1" Content="Osvezi" MinWidth="100" MinHeight="25" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25" Click="Ad_Button_Osvezi_Click"/>-->
+                        </Grid>
+
+                        <Grid DockPanel.Dock="Bottom" Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!--<Label Content="Formular za dodavanje klijenta" Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" FontSize="14.667" Background="#FFEAEAEA" HorizontalContentAlignment="Center" Margin="0,0,0,5" />-->
+                            <DockPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Background="#FFEAEAEA" Margin="0,0,0,10" >
+                                <Image DockPanel.Dock="Right" Source="Content/Images/Info-64.png" Width="25" Margin="0,0,10,0" ToolTip=""/>
+                                <Label Content="Add a new company" Style="{StaticResource HeaderStyle}" />
+                            </DockPanel>
+                            <!--<Label Grid.Column="0" Grid.Row="1" Content="Sifra klijenta:" Margin="0,0,0,5"/>-->
+                            <Label Grid.Column="0" Grid.Row="1" Content="Name:"/>
+                            <!--<TextBox x:Name="Kl_TextBox_Id" Grid.Column="1" Grid.Row="1" Text="" MinWidth="50" MinHeight="25" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ToolTip="Unesite sifru klijenta" GotFocus="TextBox_GotFocus" Margin="0,0,0,5" />-->
+                            <TextBox x:Name="tbCompanyName" Grid.Column="1" Grid.Row="1" Style="{StaticResource TextBoxStyle}" GotFocus="tbCompanyName_GotFocus"  />
+                            <Button x:Name="btnAddCompany" Grid.Column="2" Grid.Row="1" Content="Add" MinWidth="50" MinHeight="25" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25" Margin="20,0,0,5" Click="btnAddCompany_Click" />
+                            <Button x:Name="btnCancelCompany" Grid.Column="2" Grid.Row="2" Content="Cancel" MinWidth="50" MinHeight="25" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25" Margin="20,0,0,0" Click="btnCancelCompany_Click" />
+                        </Grid>
+                        
+                        <DockPanel Margin="0,20">
+                            <DockPanel DockPanel.Dock="Top" Background="#FFEAEAEA">
+                                <Image DockPanel.Dock="Right" Source="Content/Images/Info-64.png" Width="25" Margin="0,0,10,0" ToolTip="Double click on a company to get task information."/>
+                                <Label Content="All companies" Style="{StaticResource HeaderStyle}" />
+                            </DockPanel>
+                            <ListView x:Name="lvCompany" Style="{StaticResource ListViewStyle}" MouseDoubleClick="lvCompany_MouseDoubleClick"  />
+
+                        </DockPanel>
+                    </DockPanel>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Name="TabItem_Predmeti" Style="{StaticResource TabItemStyle}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Content/Images/Live Folder-30.png" Style="{StaticResource MenuIconStyle}" />
+                        <TextBlock Text="Matters" Style="{StaticResource MenuTextStyle}" />
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <TabItem.Content>
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Top" Margin="0,5,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="4*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Content="Search:" Grid.Column="0" Grid.Row="0"/>
+                            <TextBox x:Name="tbMatterSearch" Grid.Column="1" Grid.Row="0" Style="{StaticResource SearchBarStyle}" GotFocus="tbMatterSearch_GotFocus" MouseEnter="tbMatterSearch_MouseEnter" TextChanged="tbMatterSearch_TextChanged"  />
+                            <!--<Button x:Name="Pr_Button_Osvezi" Grid.Column="1" Grid.Row="1" Content="Osvezi" MinWidth="100" MinHeight="25" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25" Click="Ad_Button_Osvezi_Click"/>-->
+                        </Grid>
+
+                        <Grid DockPanel.Dock="Bottom" Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <DockPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Background="#FFEAEAEA" Margin="0,0,0,10" >
+                                <Image DockPanel.Dock="Right" Source="Content/Images/Info-64.png" Width="25" Margin="0,0,10,0" ToolTip=""/>
+                                <Label Content="Add a new matter" Style="{StaticResource HeaderStyle}" />
+                            </DockPanel>
+                            <!--<Label Grid.Column="0" Grid.Row="1" Content="Sifra predmeta:" Margin="0,0,0,5"/>-->
+                            <Label Grid.Column="0" Grid.Row="3" Content="Name:" Margin="0,0,0,5"/>
+                            <Label Grid.Column="0" Grid.Row="2" Content="Company:"/>
+                            <!--<TextBox x:Name="Pr_TextBox_Id_Predmeta" Grid.Column="1" Grid.Row="1" Text="" MinWidth="50" MinHeight="25" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ToolTip="Unesite sifru predmeta" GotFocus="TextBox_GotFocus" Margin="0,0,0,5" />-->
+                            <TextBox x:Name="tbMatterName" Grid.Column="1" Grid.Row="3" Text="" Style="{StaticResource TextBoxStyle}" GotFocus="tbMatterName_GotFocus" />
+                            <ComboBox x:Name="cbCompanyM" Grid.Column="1" Grid.Row="2" Style="{StaticResource ComboBoxStyle}" />
+                            <Button x:Name="btnAddMatter" Grid.Column="3" Grid.Row="2" Content="Add" MinWidth="50" MinHeight="25" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25" Margin="20,0,0,5" Click="btnAddMatter_Click" />
+                            <Button x:Name="btnCancelMatter" Grid.Column="3" Grid.Row="3" Content="Cancel" MinWidth="50" MinHeight="25" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25" Margin="20,0,0,0" Click="btnCancelMatter_Click"/>
+                        </Grid>
+
+                        <DockPanel Margin="0,20">
+                            <DockPanel DockPanel.Dock="Top" Background="#FFEAEAEA">
+                                <Label Content="All matters" Style="{StaticResource HeaderStyle}" />
+                            </DockPanel>
+                            <ListView x:Name="lvMatter" Style="{StaticResource ListViewStyle}" MouseDoubleClick="lvMatter_MouseDoubleClick"  />
+                        </DockPanel>
+                    </DockPanel>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Name="TabItem_Potpredmeti" Style="{StaticResource TabItemStyle}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Content/Images/Dossier-30.png" Style="{StaticResource MenuIconStyle}" />
+                        <TextBlock Text="Submatters" Style="{StaticResource MenuTextStyle}" />
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <TabItem.Content>
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Top" Margin="0,5,0,0">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="4*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <Label Content="Search:" Grid.Column="0" Grid.Row="0"/>
+                            <TextBox x:Name="tbSubmatterSearch" Grid.Column="1" Grid.Row="0" Style="{StaticResource SearchBarStyle}" GotFocus="tbSubmatterSearch_GotFocus" MouseEnter="tbSubmatterSearch_MouseEnter" TextChanged="tbSubmatterSearch_TextChanged"  />
+                        </Grid>
+
+                        <Grid DockPanel.Dock="Bottom" Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <DockPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Background="#FFEAEAEA" Margin="0,0,0,10" >
+                                <Image DockPanel.Dock="Right" Source="Content/Images/Info-64.png" Width="25" Margin="0,0,10,0" ToolTip=""/>
+                                <Label Content="Add a new submatter" Style="{StaticResource HeaderStyle}" />
+                            </DockPanel>
+                            <!--<Label Grid.Column="0" Grid.Row="1" Content="Sifra potpredmeta:" Margin="0,0,0,5"/>-->
+                            <Label Grid.Column="0" Grid.Row="4" Content="Name:" Margin="0,0,0,5"/>
+                            <Label Grid.Column="0" Grid.Row="2" Content="Company:" Margin="0,0,0,5"/>
+                            <Label Grid.Column="0" Grid.Row="3" Content="Matter:"/>
+                            <!--<TextBox x:Name="Pp_TextBox_Id_Potpredmeta" Grid.Column="1" Grid.Row="1" Text="" MinWidth="50" MinHeight="25" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25" HorizontalContentAlignment="Left" VerticalContentAlignment="Center" ToolTip="Unesite sifru potpredmeta" GotFocus="TextBox_GotFocus" Margin="0,0,0,5" />-->
+                            <TextBox x:Name="tbSubmatterName" Grid.Column="1" Grid.Row="4" Style="{StaticResource TextBoxStyle}" GotFocus="tbSubmatterName_GotFocus"  />
+                            <ComboBox x:Name="cbCompanyS" Grid.Column="1" Grid.Row="2" Style="{StaticResource ComboBoxStyle}" SelectionChanged="cbCompanyS_SelectionChanged"  />
+                            <ComboBox x:Name="cbMatterS" Grid.Column="1" Grid.Row="3" Style="{StaticResource ComboBoxStyle}" />
+                            <Button x:Name="btnAddSubmatter" Grid.Column="2" Grid.Row="3" Content="Add" MinWidth="50" MinHeight="25" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25"  Margin="20,0,0,5" Click="btnAddSubmatter_Click" />
+                            <Button x:Name="btnCancelSubmatter" Grid.Column="2" Grid.Row="4" Content="Cancel" MinWidth="50" MinHeight="25" HorizontalAlignment="Stretch" VerticalAlignment="Top" Height="25"  Margin="20,0,0,0" Click="btnCancelSubmatter_Click"/>
+                        </Grid>
+
+                        <DockPanel Margin="0,20">
+                            <DockPanel DockPanel.Dock="Top" Background="#FFEAEAEA">
+                                <Label Content="All submatters" Style="{StaticResource HeaderStyle}" />
+                            </DockPanel>
+                            <ListView x:Name="lvSubmatter" Style="{StaticResource ListViewStyle}" MouseDoubleClick="lvSubmatter_MouseDoubleClick"  />
+                        </DockPanel>
+                    </DockPanel>
+                </TabItem.Content>
+            </TabItem>
+            <TabItem Name="TabItem_Taskovi" Style="{StaticResource TabItemStyle}">
+                <TabItem.Header>
+                    <StackPanel Orientation="Horizontal">
+                        <Image Source="Content/Images/Tasks-30.png" Style="{StaticResource MenuIconStyle}" />
+                        <TextBlock Text="Tasks" Style="{StaticResource MenuTextStyle}" />
+                    </StackPanel>
+                </TabItem.Header>
+                <TabItem.Background>
+                    <LinearGradientBrush EndPoint="0,1" StartPoint="0,0">
+                        <GradientStop Color="#FFF0F0F0" Offset="0"/>
+                        <GradientStop Color="White" Offset="1"/>
+                    </LinearGradientBrush>
+                </TabItem.Background>
+                <TabItem.Content>
+                    <DockPanel>
+                        <Grid DockPanel.Dock="Bottom" Margin="0,0,0,10">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="2*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <DockPanel Grid.Column="0" Grid.Row="0" Grid.ColumnSpan="3" Background="#FFEAEAEA" Margin="0,0,0,10" >
+                                <Image DockPanel.Dock="Right" Source="Content/Images/Info-64.png" Width="25" Margin="0,0,10,0" ToolTip="Description isn't necessary."/>
+                                <Label Content="Add a new task" Style="{StaticResource HeaderStyle}" />
+                            </DockPanel>
+                            <Label Grid.Column="0" Grid.Row="1" Content="Lawyer:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Label Grid.Column="0" Grid.Row="2" Content="Company:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Label Grid.Column="0" Grid.Row="3" Content="Matter:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Label Grid.Column="0" Grid.Row="4" Content="Submatter:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Label Grid.Column="0" Grid.Row="5" Content="Date:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Label Grid.Column="0" Grid.Row="6" Content="Billable minutes:" VerticalAlignment="Center" Margin="0,0,0,5"/>
+                            <Label Grid.Column="0" Grid.Row="7" Content="Description:" VerticalAlignment="Center"/>
+                            <Label Grid.Column="0" Grid.Row="8" Content="" VerticalAlignment="Center"/>
+                            <ComboBox x:Name="cbLawyerT" Grid.Column="1" Grid.Row="1" Style="{StaticResource ComboBoxStyle}" />
+                            <ComboBox x:Name="cbCompanyT" Grid.Column="1" Grid.Row="2" Style="{StaticResource ComboBoxStyle}" SelectionChanged="cbCompanyT_SelectionChanged"  />
+                            <ComboBox x:Name="cbMatterT" Grid.Column="1" Grid.Row="3" Style="{StaticResource ComboBoxStyle}" SelectionChanged="cbMatterT_SelectionChanged" />
+                            <ComboBox x:Name="cbSubmatterT" Grid.Column="1" Grid.Row="4" Style="{StaticResource ComboBoxStyle}" />
+                            <DatePicker x:Name="dpDateT" Grid.Column="1" Grid.Row="5" Style="{StaticResource DatePickerStyle}" />
+                            <TextBox x:Name="tbBillableMins" Grid.Column="1" Grid.Row="6" Style="{StaticResource TextBoxStyle}" GotFocus="tbBillableMins_GotFocus" />
+                            <TextBox x:Name="tbDescriptionT" Grid.Column="1" Grid.Row="7" Grid.RowSpan="2" Style="{StaticResource TextAreaStyle}"  TextWrapping="Wrap" GotFocus="tbDescriptionT_GotFocus" />
+                            <Button x:Name="btnAddTask" Grid.Column="2" Grid.Row="7" Content="Add" MinWidth="50" MinHeight="25" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="20,0,0,5" Click="btnAddTask_Click" />
+                            <Button x:Name="btnCancelTask" Grid.Column="2" Grid.Row="8" Content="Cancel" MinWidth="50" MinHeight="25" HorizontalAlignment="Stretch" VerticalAlignment="Center" Margin="20,0,0,0" Click="btnCancelTask_Click"/>
+                        </Grid>
+
+                        <DockPanel Grid.Row="0">
+                            <DockPanel DockPanel.Dock="Top" Background="#FFEAEAEA">
+                                <Image DockPanel.Dock="Right" Source="Content/Images/Info-64.png" Width="25" Margin="0,0,10,0" ToolTip="Double click a task to edit it. Click 'Add' to apply edited information."/>
+                                <Label Content="All tasks" Style="{StaticResource HeaderStyle}" />
+                            </DockPanel>
+
+                            <DataGrid x:Name="dgTask" GridLinesVisibility="Horizontal" HorizontalGridLinesBrush="#FFB9B9B9" HeadersVisibility="Column" BorderBrush="White" ColumnHeaderHeight="35"  IsReadOnly="True" MouseDoubleClick="dgTask_MouseDoubleClick" >
+                            </DataGrid>
+                        </DockPanel>
+                    </DockPanel>
+                </TabItem.Content>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Window>
